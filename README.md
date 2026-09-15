@@ -4,12 +4,6 @@ This page gives the commands for training and evaluating the Support Flow model 
 
 ## Environment
 
-The preprocessed BCV four-organ dataset should be available at:
-
-```text
-/data/wyh/bcv15_abdomen_4organs/
-```
-
 Create the project environment from the repository root if it has not been installed:
 
 ```bash
