@@ -23,16 +23,26 @@ We used the following abdominal datasets:
 
 ## Training
 
-Support Flow is trained in two stages. The first command trains the graph and support-flow branch. It produces a graph checkpoint. Set `EXPERIMENTS_WYH_ROOT` to the directory in which the run should be stored.
+Run graph Flow pretraining:
 
 ```bash
-python -u bin/training_inference_torch/train_bcv15_abdomen_4organs_torch.py
+python train_support_flow.py \
+  --stage graph \
+  --data-root <data-root> \
+  --output-root <output-root>
 ```
 
-Use the generated graph checkpoint to initialize the second command. This trains the segmentation network together with the relation-guidance branch and produces `ckpt-50000.pt`.
+Then initialize segmentation training from the generated graph checkpoint:
 
 ```bash
-python -u bin/training_inference_torch/train_bcv15_abdomen_4organs_torch.py
+python train_support_flow.py \
+  --stage segmentation \
+  --data-root <data-root> \
+  --output-root <output-root> \
+  --checkpoint <path-to-ckpt-5000.pt>
+```
+
+The graph stage defaults to 5,000 iterations and the segmentation stage to 50,000 iterations. Checkpoints are saved below the specified output root.
 ```
 
 The graph cache path can be changed when a different data root or cache is used. The remaining Support Flow defaults are loaded by the training configuration.
